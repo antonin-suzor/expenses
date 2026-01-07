@@ -47,6 +47,10 @@ export default {
           Amount: { type: 'number', number: reqBody.amount },
           Tags: { type: 'select', select: { name: reqBody.tag } },
           Date: { type: 'date', date: { start: reqBody.date } },
+          Month: {
+            type: 'relation',
+            relation: [{ id: getDateMonthId(reqBody.date) }],
+          },
         },
       }),
     });
@@ -58,3 +62,23 @@ export default {
     });
   },
 } satisfies ExportedHandler<Env>;
+
+const monthIds: Record<number, string> = {
+  1: import.meta.env.VITE_NOTION_MONTH_ID_JANUARY,
+  2: import.meta.env.VITE_NOTION_MONTH_ID_FEBRUARY,
+  3: import.meta.env.VITE_NOTION_MONTH_ID_MARCH,
+  4: import.meta.env.VITE_NOTION_MONTH_ID_APRIL,
+  5: import.meta.env.VITE_NOTION_MONTH_ID_MAY,
+  6: import.meta.env.VITE_NOTION_MONTH_ID_JUNE,
+  7: import.meta.env.VITE_NOTION_MONTH_ID_JULY,
+  8: import.meta.env.VITE_NOTION_MONTH_ID_AUGUST,
+  9: import.meta.env.VITE_NOTION_MONTH_ID_SEPTEMBER,
+  10: import.meta.env.VITE_NOTION_MONTH_ID_OCTOBER,
+  11: import.meta.env.VITE_NOTION_MONTH_ID_NOVEMBER,
+  12: import.meta.env.VITE_NOTION_MONTH_ID_DECEMBER,
+};
+
+function getDateMonthId(dateString: string): string {
+  const month = new Date(dateString).getMonth() + 1;
+  return monthIds[month];
+}

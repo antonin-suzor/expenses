@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { createNotionEntry } from '../lib/notion';
 
 const EXPENSE_TAGS = ['Utilities', 'Groceries', 'Dining Out'];
 
@@ -42,11 +41,17 @@ export default function App() {
     }
     setLoading(true);
 
-    const res = await createNotionEntry(password, {
-      amount: parseFloat(amount),
-      name,
-      tag,
-      date: new Date(),
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_HOST}/api/`, {
+      method: 'POST',
+      headers: {
+        'X-Custom-Password': password,
+      },
+      body: JSON.stringify({
+        amount: parseFloat(amount),
+        name,
+        tag,
+        date: new Date().toJSON().substring(0, 10),
+      }),
     });
     if (res.ok) {
       showNotification('success', 'Expense added successfully!');
