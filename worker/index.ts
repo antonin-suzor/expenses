@@ -1,16 +1,6 @@
 interface Env {}
 export default {
   async fetch(request: Request): Promise<Response> {
-    if (request.method === 'OPTIONS') {
-      return new Response(null, {
-        headers: {
-          'Access-Control-Allow-Origin': request.headers.get('Origin') ?? '',
-          'Access-Control-Allow-Methods': 'GET, HEAD, POST, PUT, OPTIONS',
-          'Access-Control-Allow-Headers': 'Content-Type, X-Custom-Password',
-        },
-      });
-    }
-
     if (request.headers.get('X-Custom-Password') != import.meta.env.VITE_PASSWORD) {
       return new Response(null, { status: 403 });
     }
@@ -58,7 +48,6 @@ export default {
     return new Response(notionResponse.body, {
       headers: { 'Content-Type': 'application/json' },
       status: notionResponse.status,
-      statusText: notionResponse.statusText,
     });
   },
 } satisfies ExportedHandler<Env>;

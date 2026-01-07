@@ -19,5 +19,3 @@ Sanity checks:
 
 - code builds correctly: `npm run build`
 - code is well-formatted: `npm run format` (running it will automatically format the code)
-
-Even though eslint is configured for the project, you should not run it.
