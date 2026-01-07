@@ -14,7 +14,7 @@ Prerequisite: Having NodeJS installed on your local computer.
 1. Download this code
 1. Copy the file `.env.example` to `.env` and replace the variables with what you need:
     - The secret key is that of your Notion integration
-    - The datasource ID is that of the expense page
+    - The datasource IDs are those of the expenses/income pages
     - The month IDs are those of the year's month, you can easily extract them from their page link
     - Choose a password that you would like
 1. Run the command `npm run deploy`

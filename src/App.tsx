@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 
+// First is default
 const EXPENSE_TAGS = [
+  'Other',
   'Rent/Mortgage',
   'Utilities',
   'Groceries',
@@ -10,7 +12,16 @@ const EXPENSE_TAGS = [
   'Insurance',
   'Entertainment',
   'Retail',
-  'Other',
+];
+
+// First is default
+const INCOME_TAGS = [
+  'Bonus',
+  'Salary',
+  'Freelance',
+  'Dividends',
+  'Interests',
+  'Side Hustle',
 ];
 
 export default function App() {
@@ -19,9 +30,10 @@ export default function App() {
 
   const [amount, setAmount] = useState('');
   const [name, setName] = useState('');
-  const [tag, setTag] = useState('Other');
+  const [tag, setTag] = useState(EXPENSE_TAGS[0]);
   const [date, setDate] = useState(new Date().toJSON().substring(0, 10));
   const [loading, setLoading] = useState(false);
+  const [isIncome, setIsIncome] = useState(false);
   const [notification, setNotification] = useState<{
     type: 'success' | 'error';
     message: string;
@@ -45,6 +57,15 @@ export default function App() {
     setTimeout(() => setNotification(null), 5000);
   };
 
+  const switchExpensesIncome = () => {
+    setIsIncome(!isIncome);
+    if (isIncome) {
+      setTag(INCOME_TAGS[0]);
+    } else {
+      setTag(EXPENSE_TAGS[0]);
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!amount || !name) {
@@ -63,16 +84,17 @@ export default function App() {
         name,
         tag,
         date,
+        income: isIncome,
       }),
     });
     if (res.ok) {
-      showNotification('success', 'Expense added successfully!');
+      showNotification('success', `${isIncome ? 'Income' : 'Expense'} added successfully!`);
       setAmount('');
       setName('');
       setTag('Other');
       setDate(new Date().toJSON().substring(0, 10));
     } else {
-      showNotification('error', 'Failed to add expense');
+      showNotification('error', `Failed to add ${isIncome ? 'income' : 'expense'}`);
     }
     setLoading(false);
   };
@@ -116,10 +138,19 @@ export default function App() {
         {/* Header */}
         <div className="mt-4 mb-8">
           <div className="flex items-center justify-between">
-            <h1 className="text-3xl font-bold">Expenses</h1>
-            <button onClick={handleLogout} className="btn btn-ghost btn-sm" title="Logout">
-              Log Out
-            </button>
+            <h1 className="text-3xl font-bold">{isIncome ? 'Income' : 'Expenses'}</h1>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={switchExpensesIncome}
+                className="btn btn-sm btn-outline"
+                title={isIncome ? 'Switch to expenses' : 'Switch to income'}
+              >
+                {isIncome ? 'Switch to Expenses' : 'Switch to Income'}
+              </button>
+              <button onClick={handleLogout} className="btn btn-ghost btn-sm" title="Logout">
+                Log Out
+              </button>
+            </div>
           </div>
         </div>
 
@@ -141,7 +172,7 @@ export default function App() {
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g., Coffee at Starbucks"
+                  placeholder={isIncome ? 'e.g., Salary deposit' : 'e.g., Coffee at Starbucks'}
                   className="input-bordered input"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -178,7 +209,7 @@ export default function App() {
                   onChange={(e) => setTag(e.target.value)}
                   disabled={loading}
                 >
-                  {EXPENSE_TAGS.map((t) => (
+                  {(isIncome ? INCOME_TAGS : EXPENSE_TAGS).map((t) => (
                     <option key={t} value={t}>
                       {t}
                     </option>
@@ -212,7 +243,7 @@ export default function App() {
                     Adding...
                   </>
                 ) : (
-                  'Add Expense'
+                  `Add ${isIncome ? 'Income' : 'Expense'}`
                 )}
               </button>
             </form>
