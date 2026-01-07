@@ -23,7 +23,9 @@ export default {
       body: JSON.stringify({
         parent: {
           type: 'data_source_id',
-          data_source_id: reqBody.income ? import.meta.env.VITE_NOTION_DATASOURCE_ID_INCOME : import.meta.env.VITE_NOTION_DATASOURCE_ID_EXPENSES,
+          data_source_id: reqBody.income
+            ? import.meta.env.VITE_NOTION_DATASOURCE_ID_INCOME
+            : import.meta.env.VITE_NOTION_DATASOURCE_ID_EXPENSES,
         },
         properties: {
           Source: {

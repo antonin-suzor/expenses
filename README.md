@@ -1,12 +1,12 @@
 # expenses
 
-Entirely free, Cloudflare-deployable Web UI to help fill your [Notion *Personal Finance Tracker*](https://www.notion.so/marketplace/templates/personal-finance-tracker-with-automations?cr=pro%3Anotion) on your phone.
+Entirely free, Cloudflare-deployable, friendly UI to help you fill your [Notion *Personal Finance Tracker*](https://www.notion.so/marketplace/templates/personal-finance-tracker-with-automations?cr=pro%3Anotion), on your phone or computer.
 
 Working example: https://expenses.antonin-suzor.com (type in whatever password, you will access the page but will not be able to send requests)
 
 ## How to deploy
 
-Prerequisite: Having NodeJS installed on your local computer.
+Prerequisite: Having [NodeJS](https://nodejs.org/en/download) installed on your local computer.
 
 1. Have a Notion page with Notion's "*Personal Finance Tracker*" template enabled
 1. Create a Notion integration in your workspace and give it permissions on the template
@@ -19,4 +19,4 @@ Prerequisite: Having NodeJS installed on your local computer.
     - Choose a password that you would like
 1. Run the command `npm run deploy`
 
-You should then get a URL where the page is set up correctly. You can access it from anywhere, and on mobile, it should be easier to use than the notion app.
+You should then get a URL where the page is set up correctly. You can access it from anywhere, and it's easier to use than the Notion app.

@@ -15,14 +15,7 @@ const EXPENSE_TAGS = [
 ];
 
 // First is default
-const INCOME_TAGS = [
-  'Bonus',
-  'Salary',
-  'Freelance',
-  'Dividends',
-  'Interests',
-  'Side Hustle',
-];
+const INCOME_TAGS = ['Bonus', 'Salary', 'Freelance', 'Dividends', 'Interests', 'Side Hustle'];
 
 export default function App() {
   const [passwordEntry, setPasswordEntry] = useState('');
@@ -64,7 +57,7 @@ export default function App() {
     } else {
       setTag(EXPENSE_TAGS[0]);
     }
-  }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -142,7 +135,7 @@ export default function App() {
             <div className="flex items-center gap-2">
               <button
                 onClick={switchExpensesIncome}
-                className="btn btn-sm btn-outline"
+                className="btn btn-outline btn-sm"
                 title={isIncome ? 'Switch to expenses' : 'Switch to income'}
               >
                 {isIncome ? 'Switch to Expenses' : 'Switch to Income'}
