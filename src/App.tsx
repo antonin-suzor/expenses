@@ -1,6 +1,17 @@
 import { useEffect, useState } from 'react';
 
-const EXPENSE_TAGS = ['Utilities', 'Groceries', 'Dining Out'];
+const EXPENSE_TAGS = [
+  'Rent/Mortgage',
+  'Utilities',
+  'Groceries',
+  'Dining Out',
+  'Healthcare',
+  'Transportation',
+  'Insurance',
+  'Entertainment',
+  'Retail',
+  'Other',
+];
 
 export default function App() {
   const [passwordEntry, setPasswordEntry] = useState('');
@@ -9,6 +20,7 @@ export default function App() {
   const [amount, setAmount] = useState('');
   const [name, setName] = useState('');
   const [tag, setTag] = useState('Other');
+  const [date, setDate] = useState(new Date().toJSON().substring(0, 10));
   const [loading, setLoading] = useState(false);
   const [notification, setNotification] = useState<{
     type: 'success' | 'error';
@@ -50,7 +62,7 @@ export default function App() {
         amount: parseFloat(amount),
         name,
         tag,
-        date: new Date().toJSON().substring(0, 10),
+        date,
       }),
     });
     if (res.ok) {
@@ -58,6 +70,7 @@ export default function App() {
       setAmount('');
       setName('');
       setTag('Other');
+      setDate(new Date().toJSON().substring(0, 10));
     } else {
       showNotification('error', 'Failed to add expense');
     }
@@ -105,7 +118,7 @@ export default function App() {
           <div className="flex items-center justify-between">
             <h1 className="text-3xl font-bold">Expenses</h1>
             <button onClick={handleLogout} className="btn btn-ghost btn-sm" title="Logout">
-              ⏻
+              Log Out
             </button>
           </div>
         </div>
@@ -121,6 +134,22 @@ export default function App() {
         <div className="card bg-base-100 shadow-lg">
           <div className="card-body">
             <form onSubmit={handleSubmit} className="space-y-5">
+              {/* Name Input */}
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text font-semibold">Description</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g., Coffee at Starbucks"
+                  className="input-bordered input"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                  disabled={loading}
+                />
+              </div>
+
               {/* Amount Input */}
               <div className="form-control">
                 <label className="label">
@@ -138,26 +167,10 @@ export default function App() {
                 />
               </div>
 
-              {/* Name Input */}
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-semibold">Description</span>
-                </label>
-                <input
-                  type="text"
-                  placeholder="e.g., Coffee at Starbucks"
-                  className="input-bordered input"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                  disabled={loading}
-                />
-              </div>
-
               {/* Tag Select */}
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text font-semibold">Category</span>
+                  <span className="label-text font-semibold">Tag</span>
                 </label>
                 <select
                   className="select-bordered select"
@@ -171,6 +184,20 @@ export default function App() {
                     </option>
                   ))}
                 </select>
+              </div>
+
+              {/* Date Input */}
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text font-semibold">Date</span>
+                </label>
+                <input
+                  type="date"
+                  className="input-bordered input"
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
+                  disabled={loading}
+                />
               </div>
 
               {/* Submit Button */}
