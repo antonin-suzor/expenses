@@ -36,13 +36,17 @@ export default function App() {
     e.preventDefault();
     if (passwordEntry.trim()) {
       setPassword(passwordEntry);
-      localStorage.setItem('EXPENSES_PASSWORD', passwordEntry);
+      try {
+        localStorage.setItem('EXPENSES_PASSWORD', passwordEntry);
+      } catch {}
     }
   };
 
   const handleLogout = () => {
     setPassword('');
-    localStorage.removeItem('EXPENSES_PASSWORD');
+    try {
+      localStorage.removeItem('EXPENSES_PASSWORD');
+    } catch {}
   };
 
   const showNotification = (type: 'success' | 'error', message: string) => {
@@ -93,7 +97,9 @@ export default function App() {
   };
 
   useEffect(() => {
-    setPassword(localStorage.getItem('EXPENSES_PASSWORD') ?? '');
+    try {
+      setPassword(localStorage.getItem('EXPENSES_PASSWORD') ?? '');
+    } catch {}
   }, []);
 
   return password == '' ? (
