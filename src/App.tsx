@@ -1,21 +1,8 @@
 import { useEffect, useState } from 'react';
 
 // First is default
-const EXPENSE_TAGS = [
-  'Other',
-  'Rent/Mortgage',
-  'Utilities',
-  'Groceries',
-  'Dining Out',
-  'Healthcare',
-  'Transportation',
-  'Insurance',
-  'Entertainment',
-  'Retail',
-];
-
-// First is default
-const INCOME_TAGS = ['Bonus', 'Salary', 'Freelance', 'Dividends', 'Interests', 'Side Hustle'];
+const EXPENSE_TAGS = `${import.meta.env.VITE_EXPENSE_TAGS}`.split(',');
+const INCOME_TAGS = `${import.meta.env.VITE_INCOME_TAGS}`.split(',');
 
 export default function App() {
   const [passwordEntry, setPasswordEntry] = useState('');

@@ -16,6 +16,7 @@ Prerequisite: Having [NodeJS](https://nodejs.org/en/download) installed on your 
     - The secret key is that of your Notion integration
     - The datasource IDs are those of the expenses/income pages
     - The month IDs are those of the year's month, you can easily extract them from their page link
+    - If you have custom tags for expenses/income, you can specify them in a comma-separated way
     - Choose a password that you would like
 1. Run the command `npm run deploy`
 
